@@ -1,0 +1,24 @@
+#!/bin/bash
+User=$(cat /etc/passwd | cut -d : -f 1)
+ud=$(cat /etc/passwd | cut -d : -f 3)
+path=$(cat /etc/passwd | cut -d : -f 6)
+i=1
+#IFS=$(echo -e '\n') read -r -a UserTab <<< "$User"
+echo "------------------------------------------------------------------"
+echo "|        User        ||         UID        ||        PATH        |"
+echo "------------------------------------------------------------------"
+#for element in "${UserTab[@]}"
+#do
+#	echo "$element"
+#done
+this_user=$(echo "$User" | cut -d$'\n' -f 1)
+this_uid=$(echo "$ud" | cut -d$'\n' -f 1)
+this_path=$(echo "$path" | cut -d$'\n' -f 1)
+while [ $this_user ]
+do
+	echo "| $this_user || $this_uid || $this_path"
+	let i++
+	this_user=$(echo "$User" | cut -d$'\n' -f $i)
+	this_uid=$(echo "$ud" | cut -d$'\n' -f $i)
+	this_path=$(echo "$path" | cut -d$'\n' -f $i)
+done
