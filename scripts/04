@@ -1,0 +1,14 @@
+#!/bin/bash
+#apt-get install mailutils
+#touch /root/cron_md5
+#crontab -e
+#0 0 * * * /root/scripts/04
+
+OLD_MD5='cat /root/cron_md5'
+NEW_MD5='md5sum /etc/crontab | cut -d " " -f1'
+
+if [ "$OLD_MD5" != "$NEW_MD5" ]
+then
+	echo $NEW_MD5  > /root/cron_md5
+	echo "/etc/crontab has been modifed" | mail -s "/etc/crontab Modification" root
+fi
